@@ -16,7 +16,7 @@ export const getAll = async (date: string) => {
   try {
     checResult = await checTree(alias)
   } catch (e) {
-    throw e
+    console.log(e)
   }
 
   if (checResult.length > 0) {

@@ -4,6 +4,11 @@ import { getOne } from './reports.service'
 
 router.get('/:date/:id', async (req, res) => {
   const { date, id } = req.params
-  res.json(await getOne(date, id))
+  try {
+    const result = await getOne(date, id)
+    res.json(result)
+  } catch (e) {
+    console.log(e)
+  }
 })
 export default router

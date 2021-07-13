@@ -11,5 +11,7 @@ export const getOne = async (date: string, id: string) => {
 
   try {
     return await ReportsModel.getReport(alias, dateSotr, id)
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 }

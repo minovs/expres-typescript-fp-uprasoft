@@ -4,10 +4,12 @@ import { getAll } from './workers.service'
 
 router.get('/:date', async (req, res) => {
   const { date } = req.params
-  res.status(200).json(await getAll(date))
+  try {
+    const result = await getAll(date)
+    res.status(200).json(result)
+  } catch (e) {
+    console.log(e)
+  }
 })
-// router.get('/:date/:id', async (req, res) => {
-//   const { date, id } = req.params
-//   res.json(await getOne(date, id))
-// })
+
 export default router
