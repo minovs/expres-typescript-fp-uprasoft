@@ -1,46 +1,31 @@
 import { checTree, getWorkersForTree, getWorkers, getWorker } from './workers.model'
-import { buildTree } from '../app.service'
+import { buildTree } from '../service/tree.service'
 
-export const getAll = async (date: string) => {
-  const alias = 'upk'
-  const userGroup: string = '0'
-  const userSingl: string = '0'
-
+export const getAll = async (alfirm: string, parent_id: number, id_log: number, date: string) => {
   const dateSotr = new Intl.DateTimeFormat('ru-RU')
     .format(+date)
     .split('.')
     .reverse()
     .join('')
 
-  let checResult = []
   try {
-    checResult = await checTree(alias)
-  } catch (e) {
-    console.log(e)
-  }
-
-  if (checResult.length > 0) {
-    if (userGroup === '0') {
-      try {
-        const data = await getWorkersForTree(alias, dateSotr)
+    let checResult = []
+    checResult = await checTree(alfirm)
+    if (checResult.length > 0) {
+      if (parent_id === 0) {
+        const data = await getWorkersForTree(alfirm, dateSotr)
         return await buildTree(data)
-      } catch (e) {}
-    } else if (userSingl === '0') {
-      try {
-        return await getWorkers(alias, dateSotr, userGroup)
-      } catch (e) {}
+      } else if (id_log === 0) {
+        return await getWorkers(alfirm, dateSotr, parent_id)
+      } else {
+        return await getWorker(alfirm, dateSotr, id_log)
+      }
+    } else if (id_log === 0) {
+      return await getWorkers(alfirm, dateSotr, 0)
     } else {
-      try {
-        return await getWorker(alias, dateSotr, userSingl)
-      } catch (e) {}
+      return await getWorker(alfirm, dateSotr, id_log)
     }
-  } else if (userSingl === '0') {
-    try {
-      return await getWorkers(alias, dateSotr, '0')
-    } catch (e) {}
-  } else {
-    try {
-      return await getWorker(alias, dateSotr, userSingl)
-    } catch (e) {}
+  } catch (e) {
+    throw e
   }
 }

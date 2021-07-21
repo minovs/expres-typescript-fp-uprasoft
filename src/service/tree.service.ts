@@ -1,18 +1,4 @@
-type workersType = {
-  id: number
-  name: string
-  parent_id: number
-  id_log: number
-  status: string | null
-}
-type treeType = {
-  id: number
-  name: string
-  parent_id: number
-  id_log: number
-  status: string | null
-  children?: workersType[]
-}
+import { workersType, treeType } from '../types/types'
 
 export const buildTree = async (data: workersType[]) => {
   const map = new Map<number, treeType>(data.map((item) => [item.id, item]))
