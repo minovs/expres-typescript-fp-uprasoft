@@ -10,7 +10,7 @@ router.post('/login', async (req, res, next) => {
   if (!login || !password) return next(customError(400, 'Все поля должны быть заполнены!'))
   try {
     const tokens = await auth(login, password)
-    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true })
     return res.json(tokens)
   } catch (e) {
     next(e)

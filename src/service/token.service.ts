@@ -4,10 +4,10 @@ import { userType } from '../types/types'
 export const generateTokens = async (user: userType) => {
   const { id, alfirm, parent_id, id_log, roles } = user
   const accessToken = jwt.sign({ id, alfirm, parent_id, id_log, roles }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: '1h',
+    expiresIn: '15m',
   })
   const refreshToken = jwt.sign({ id, alfirm, parent_id, id_log, roles }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: '1h',
+    expiresIn: '15d',
   })
   return {
     accessToken,
